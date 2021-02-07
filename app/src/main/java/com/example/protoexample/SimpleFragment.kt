@@ -26,9 +26,12 @@ class SimpleFragment : Fragment() {
             false
         )
         viewModel = ViewModelProvider(this, SimpleViewModelFactory(SimpleRepository.getInstance(requireContext()))).get(SimpleViewModel::class.java)
-        binding.buttonInc.setOnClickListener {viewModel.onIncrementButtonClicked()}
-        binding.buttonReset.setOnClickListener {viewModel.counter.value = 0}
+        binding.buttonInc.setOnClickListener {
+            binding.previousValueText.text = viewModel.counter.value.toString()
+            viewModel.onIncrementButtonClicked()}
+        binding.buttonReset.setOnClickListener {viewModel.counter.value = 0 }
         viewModel.counter.observe(viewLifecycleOwner, Observer { value -> binding.textView.text = value.toString() })
+        binding.previousValueText.text = viewModel.counter.value.toString()
 
         return binding.root
     }
