@@ -25,11 +25,16 @@ class SimpleFragment : Fragment() {
             container,
             false
         )
-        viewModel = ViewModelProvider(this).get(SimpleViewModel::class.java)
+        viewModel = ViewModelProvider(this, SimpleViewModelFactory(SimpleRepository.getInstance(requireContext()))).get(SimpleViewModel::class.java)
         binding.button.setOnClickListener {viewModel.onButtonClicked()}
         viewModel.counter.observe(viewLifecycleOwner, Observer { value -> binding.textView.text = value.toString() })
 
         return binding.root
+    }
+
+    override fun onPause() {
+        super.onPause()
+        viewModel.updateData()
     }
 
 }
