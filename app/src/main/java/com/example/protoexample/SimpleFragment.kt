@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.example.protoexample.databinding.SimpleFragmentBinding
 
 class SimpleFragment : Fragment() {
@@ -24,6 +25,10 @@ class SimpleFragment : Fragment() {
             container,
             false
         )
+        viewModel = ViewModelProvider(this).get(SimpleViewModel::class.java)
+        binding.button.setOnClickListener {viewModel.onButtonClicked()}
+        viewModel.counter.observe(viewLifecycleOwner, Observer { value -> binding.textView.text = value.toString() })
+
         return binding.root
     }
 
