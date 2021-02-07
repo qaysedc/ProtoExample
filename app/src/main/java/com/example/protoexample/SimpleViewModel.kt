@@ -24,7 +24,7 @@ class SimpleViewModel(private val repository: SimpleRepository) : ViewModel() {
         viewModelScope.launch { counter.value?.let { repository.updateCounter(it) } }
     }
 
-    fun onButtonClicked(){
+    fun onIncrementButtonClicked(){
         counter.value = counter.value?.plus(1)
     }
 
